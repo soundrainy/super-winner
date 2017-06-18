@@ -7,65 +7,65 @@
 <script>
 window.onload = function(){
   var EventUtil = {
-		addHandler : function(element,type,handler){
-			if (element.addEventListener){
-				element.addEventListener(type,handler,false);
-			}else if (element.attachEvent){
-				element.attachEvent("on"+type,handler);
-			}else {
-				element["on"+type] = handler;
-			}
-		},
-		getEvent : function(event){
-			return event ? event : window.event;
-		},
-		getTarget: function(event){
-			return event.target || event.srcElement;
-		},
-		preventDefault : function(event){
-			if (event.preventDefault){
-				event.preventDefault();
-			}else{
-				event.returnValue = false;
-			}
-		} 
-    };
-    var textbox = document.forms[0].elements[0];
-	EventUtil.addHandler(textbox, "focus", function(event){
-	    event = EventUtil.getEvent(event);
-		var target = EventUtil.getTarget(event);
-		if(target.style.backgroundColor != "red"){
-		    target.style.backgroundColor = "yellow";
+     addHandler : function(element,type,handler){
+	if (element.addEventListener){
+	   element.addEventListener(type,handler,false);
+	}else if (element.attachEvent){
+	   element.attachEvent("on"+type,handler);
+	}else {
+	   element["on"+type] = handler;
+	}
+    },
+    getEvent : function(event){
+	return event ? event : window.event;
+    },
+    getTarget: function(event){
+	return event.target || event.srcElement;
+    },
+    preventDefault : function(event){
+	if (event.preventDefault){
+	    event.preventDefault();
+	}else{
+	    event.returnValue = false;
+	}
+    } 
+  };
+  var textbox = document.forms[0].elements[0];
+    EventUtil.addHandler(textbox, "focus", function(event){
+	event = EventUtil.getEvent(event);
+	var target = EventUtil.getTarget(event);
+	if(target.style.backgroundColor != "red"){
+	    target.style.backgroundColor = "yellow";
+    }
+  });
+  EventUtil.addHandler(textbox, "blur", function(event){
+	event = EventUtil.getEvent(event);
+	var target = EventUtil.getTarget(event);
+	if(/[^\d]/.test(target.value)){
+	    target.style.backgroundColor="red";
+	    EventUtil.preventDefault(event);
+	}else{
+	    target.style.backgroundColor="";
 		}
 	});
-	EventUtil.addHandler(textbox, "blur", function(event){
-	    event = EventUtil.getEvent(event);
-		var target = EventUtil.getTarget(event);
-		if(/[^\d]/.test(target.value)){
-		    target.style.backgroundColor="red";
-			EventUtil.preventDefault(event);
-		}else{
-		    target.style.backgroundColor="";
-		}
-	});
-	EventUtil.addHandler(textbox, "change", function(event){
-	    event = EventUtil.getEvent(event);
-		var target = EventUtil.getTarget(event);
-		if(/[^\d]/.test(target.value)){
-		    target.style.backgroundColor="red";
-			var btn = target.element["submit_btn"];
-			btn.disabled = true;
-		}else{
-		    target.style.backgroundColor="";
-		}
-	});
+  EventUtil.addHandler(textbox, "change", function(event){
+	event = EventUtil.getEvent(event);
+	var target = EventUtil.getTarget(event);
+	if(/[^\d]/.test(target.value)){
+	    target.style.backgroundColor="red";
+	    var btn = target.element["submit_btn"];
+	    btn.disabled = true;
+	}else{
+	    target.style.backgroundColor="";
+	}
+  });
 /*(function(){
     var textbox = document.forms[0].elements[0];
 	if(/[^\d]/.test(textbox.value)){
-			textbox.style.backgroundColor = "red";
-			var btn = target.element["submit_btn"];
-			btn.disabled = true;
-	    }
+	    textbox.style.backgroundColor = "red";
+	    var btn = target.element["submit_btn"];
+	    btn.disabled = true;
+	}
     })();*/
 	
 };
